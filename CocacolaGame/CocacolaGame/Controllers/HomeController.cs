@@ -20,9 +20,15 @@ namespace CocacolaGame.Controllers
             return View();
         }
 
+        public ActionResult Page1()
+        {
+            
+            return View();
+        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
+            
 
             return View();
         }
