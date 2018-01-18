@@ -5,8 +5,24 @@ using System.Web;
 
 namespace CocacolaGame.Models
 {
-    public class DiceDot
+    public class Dice
     {
-        public string Id { get; set; } 
+       
+
+        public void ThrowDice()
+        {
+
+        
+
+
+
+           
+         ;
+        }
+
+
+
+
     }
-}
+
+    }

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CocacolaGame", "CocacolaGame\CocacolaGame.csproj", "{7FEC9BE0-A105-493F-8353-005DA16CCC44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameEngine", "GameEngine\GameEngine.csproj", "{EAAA4703-F764-4ECA-BF5B-5EA646116455}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{7FEC9BE0-A105-493F-8353-005DA16CCC44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7FEC9BE0-A105-493F-8353-005DA16CCC44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7FEC9BE0-A105-493F-8353-005DA16CCC44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAAA4703-F764-4ECA-BF5B-5EA646116455}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAAA4703-F764-4ECA-BF5B-5EA646116455}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAAA4703-F764-4ECA-BF5B-5EA646116455}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAAA4703-F764-4ECA-BF5B-5EA646116455}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
