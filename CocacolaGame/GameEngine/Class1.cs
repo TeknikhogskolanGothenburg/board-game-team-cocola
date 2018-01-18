@@ -8,5 +8,10 @@ namespace GameEngine
 {
     public class Class1
     {
+        public static int DiceRolling()
+        {
+            Random number = new Random();
+            return number.Next(1, 7);
+        }
     }
 }
