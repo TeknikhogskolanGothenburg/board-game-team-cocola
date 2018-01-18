@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using GameEngine;
 
 namespace CocacolaGame.Controllers
 {
     public class HomeController : Controller
     {
+         //private static List<Ludo> 
         public ActionResult Index()
         {
-          
-
+            Ludo ludoGame = new Ludo();
             
-            return View();
+            return View(ludoGame.GameStateModel);
         }
 
         public ActionResult About()
@@ -37,5 +38,8 @@ namespace CocacolaGame.Controllers
 
             return View();
         }
+
+        
+ 
     }
 }

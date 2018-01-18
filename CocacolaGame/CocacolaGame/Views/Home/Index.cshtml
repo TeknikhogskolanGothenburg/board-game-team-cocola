@@ -1,10 +1,6 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-@{
-    Random s = new Random();
-    var @i = 0;
-}
 
 
 
@@ -13,9 +9,7 @@
         <div class="currentPlayer">player1</div>
         <div class="dice">
             @{
-                i = s.Next(1, 7);
-
-                switch (i)
+                switch (Model.DiceValue)
                 {
                     case 1:
                         <div class="diceDot" id="center"></div>
