@@ -5,8 +5,8 @@ using System.Web;
 
 namespace CocacolaGame.Models
 {
-    public class Dice
+    public class DiceDot
     {
-
+        public string Id { get; set; } 
     }
 }
