@@ -4,20 +4,18 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication4.Models;
-using ClassLibrary1;
+
 namespace WebApplication4.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
+            
+            MyfirstModel gh = new MyfirstModel();
+            
 
-            MyfirstModel S = new MyfirstModel();
-            S.Tet();
-
-         
-
-            return View(S);
+            return View(gh);
            
             
         }
