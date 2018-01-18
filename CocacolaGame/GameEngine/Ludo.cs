@@ -21,6 +21,8 @@ namespace GameEngine
         }
 
         public object GameStateModel { get; }
+
+        public List<string> Players { get; }
         // list of players
         // which player is playing now
         // lasted dicevalue
