@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 
-namespace CocacolaGame
+namespace WebApplication4
 {
     public class RouteConfig
     {

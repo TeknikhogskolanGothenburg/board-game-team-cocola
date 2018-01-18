@@ -1,7 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
 
-namespace CocacolaGame
+namespace WebApplication4
 {
     public class FilterConfig
     {

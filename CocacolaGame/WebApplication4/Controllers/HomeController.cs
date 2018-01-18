@@ -3,43 +3,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using GameEngine;
-
-namespace CocacolaGame.Controllers
+using WebApplication4.Models;
+using ClassLibrary1;
+namespace WebApplication4.Controllers
 {
     public class HomeController : Controller
     {
-         //private static List<Ludo> 
         public ActionResult Index()
         {
-            Ludo ludoGame = new Ludo();
+
+            MyfirstModel S = new MyfirstModel();
+            S.Tet();
+
+         
+
+            return View(S);
+           
             
-            return View(ludoGame.GameStateModel);
         }
 
         public ActionResult About()
         {
+
             ViewBag.Message = "Your application description page.";
-        
-
             return View();
         }
 
-        public ActionResult Page1()
-        {
-            
-            return View();
-        }
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-            
-            
 
             return View();
         }
-
-        
- 
     }
 }

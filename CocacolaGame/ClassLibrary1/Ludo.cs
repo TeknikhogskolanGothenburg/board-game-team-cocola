@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameEngine
+namespace ClassLibrary1
 {
     public class Ludo
     {
@@ -13,12 +13,12 @@ namespace GameEngine
             // Start a new Ludo game
         }
 
-        Dice _dice = new Dice();
+       
 
-        public void RollDice()
-        {
-            _dice.RollDice();
-        }
+        //////public int RollDice()
+        //////{
+            
+        //////}
 
         public object GameStateModel { get; }
 
@@ -30,4 +30,6 @@ namespace GameEngine
         // move of brick
         // 
     }
+
+}
 }
