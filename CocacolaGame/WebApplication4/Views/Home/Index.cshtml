@@ -1,7 +1,8 @@
 ﻿@model  WebApplication4.Models.MyfirstModel
 @{
     ViewBag.Title = "Home Page";
-
+    @Styles.Render("~/Content/rest.css")
+    @Styles.Render("~/Content/LudoStyle.css")
 }
 
 <div class="gameInfo">
@@ -9,7 +10,7 @@
     <div class="currentPlayer">player1</div>
     <div class="dice">
         @{
-            switch ()
+            switch (Model.DiceRandom)
             {
                 case 1:
                     <div class="diceDot" id="center"></div>
