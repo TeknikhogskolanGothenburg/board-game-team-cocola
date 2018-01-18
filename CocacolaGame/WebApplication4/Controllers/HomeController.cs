@@ -12,10 +12,9 @@ namespace WebApplication4.Controllers
         public ActionResult Index()
         {
             
-            MyfirstModel gh = new MyfirstModel();
-            
+           
 
-            return View(gh);
+            return View();
            
             
         }
