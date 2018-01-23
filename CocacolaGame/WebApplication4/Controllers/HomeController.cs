@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using WebApplication4.Models;
+using GameEngine;
 
 
 namespace WebApplication4.Controllers
@@ -28,7 +28,8 @@ namespace WebApplication4.Controllers
             }
             else
             {
-               
+                Database Game = new Database();
+                Game.createGame();
                 return RedirectToAction("GameStarter", "Home", new {  name });
             }
 
