@@ -29,7 +29,7 @@ namespace GameEngine
                 stringChars[i] = chars[random.Next(chars.Length)];
             }
 
-             generatedKey = new String(stringChars);
+            generatedKey = new String(stringChars);
             return generatedKey;
         }
 
@@ -42,22 +42,22 @@ namespace GameEngine
 
                 if (!CheckIfKeyExists(generatedKey))
                 {
-                    string query = "INSERT INTO Game([Key]) Values('"+generatedKey+"')";
+                    string query = "INSERT INTO Game([Key]) Values('" + generatedKey + "')";
                     SqlCommand CreateGame = new SqlCommand(query, Connection);
                     Connection.Open();
                     CreateGame.ExecuteNonQuery();
                     Connection.Close();
                     checker = false;
 
-                        
+
                 }
             }
         }
-        
+
         public bool CheckIfKeyExists(string key)
         {
 
-            string query = "SELECT * FROM Game WHERE [Key] ='"+key+"'";
+            string query = "SELECT * FROM Game WHERE [Key] ='" + key + "'";
             SqlCommand CreateGame = new SqlCommand(query, Connection);
             Connection.Open();
             SqlDataReader reader = CreateGame.ExecuteReader();
