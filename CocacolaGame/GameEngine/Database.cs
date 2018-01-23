@@ -10,23 +10,53 @@ namespace GameEngine
 {
     public class Database
     {
+        public string generatedKey;
         private SqlConnection Connection;
         public Database()
         {
-            Connection = new SqlConnection(@"Data Source=DESKTOP-FAGSG73\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
+            Connection = new SqlConnection(@"Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
         }
-        public void CreateGame()
-        {
-            string query = "INSERT INTO Game([Key]) Values('hgxahxah')";
-            SqlCommand CreateGame = new SqlCommand(query, Connection);
-            Connection.Open();
-            CreateGame.ExecuteNonQuery();
-            Connection.Close();
-        }
-        public bool CheckGame(string key)
+        public string CreateKey()
         {
 
-            string query = "SELECT * FROM Game WHERE [Key] = 'key'";
+            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            var stringChars = new char[5];
+            var random = new Random();
+
+            for (int i = 0; i < stringChars.Length; i++)
+            {
+                stringChars[i] = chars[random.Next(chars.Length)];
+            }
+
+             generatedKey = new String(stringChars);
+            return generatedKey;
+        }
+
+        public void InsertKeyInDataBase()
+        {
+            bool checker = true;
+            while (checker)
+            {
+                generatedKey = CreateKey();
+
+                if (!CheckIfKeyExists(generatedKey))
+                {
+                    string query = "INSERT INTO Game([Key]) Values('"+generatedKey+"')";
+                    SqlCommand CreateGame = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    CreateGame.ExecuteNonQuery();
+                    Connection.Close();
+                    checker = false;
+
+                        
+                }
+            }
+        }
+        
+        public bool CheckIfKeyExists(string key)
+        {
+
+            string query = "SELECT * FROM Game WHERE [Key] ='"+key+"'";
             SqlCommand CreateGame = new SqlCommand(query, Connection);
             Connection.Open();
             SqlDataReader reader = CreateGame.ExecuteReader();

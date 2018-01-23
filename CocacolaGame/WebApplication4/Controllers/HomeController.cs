@@ -24,19 +24,21 @@ namespace WebApplication4.Controllers
             else
             {
                 Database Game = new Database();
-                Game.createGame();
-                return RedirectToAction("GameStarter", "Home", new { name });
+                Game.InsertKeyInDataBase();
+
+                return RedirectToAction("GameStarter", "Home", new { Gamekey = Game.generatedKey });
             }
         }
 
         public ActionResult CreateGame()
         {
+           
             return View();
         }
 
-        public ActionResult GameStarter(string name)
+        public ActionResult GameStarter(string Gamekey)
         {
-            ViewBag.Key = name;
+            ViewBag.Key = Gamekey;
             return View();
         }
 
