@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication4.Models;
-using GameEngine;
+
 
 namespace WebApplication4.Controllers
 {
@@ -12,38 +12,41 @@ namespace WebApplication4.Controllers
     {
         public ActionResult Index()
         {
-            
-           
+
+
 
             return View();
-           
+
+
+        }
+        public ActionResult GameChecker(string name = null)
+        {
+
+            if (name == null)
+            {
+                return RedirectToActionPermanent("CreateGame");
+            }
+            else
+            {
+               
+                return RedirectToAction("GameStarter", "Home", new {  name });
+            }
+
+
+        }
+        public ActionResult CreateGame()
+        {
+
+            return View();
             
         }
 
-        //public ActionResult StartWindow()
-        //{
-        //    return View();
-            
-        //}
-
-        public string Login (string userName, string passWord)
+        public ActionResult GameStarter(string name)
         {
-            User z = new User();
-            var model = z.ReturnList().Where(x => x.UserName == userName && x.Password == passWord).SingleOrDefault();
+        
+            ViewBag.Key = name;
+            return View();
 
-            //Create Cookies
-            HttpCookie UserCookie = new HttpCookie("user", model.Id.ToString());
-
-            //Expire Date
-            UserCookie.Expires.AddDays(14);
-
-            //Save data at Cookies
-            HttpContext.Response.SetCookie(UserCookie);
-
-            //Get user data from Cookie
-            HttpCookie NewCookie = Request.Cookies["user"];
-
-            return NewCookie.Value;
 
         }
 
