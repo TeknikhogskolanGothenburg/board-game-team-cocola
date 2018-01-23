@@ -15,6 +15,23 @@ namespace fias.Controllers
         {
             return View();
         }
+        public ActionResult JoinGameView()
+        {
+         
+
+            return View();
+        }
+        //public ActionResult JoinGameLogic( string key)
+        //{
+        //    //HttpCookie s;
+        //    //if (Database.CheckIfKeyExists(key))
+        //    //{
+        //    //    HttpCookie s = new HttpCookie("Game")
+        //    //}
+           
+        //}
+
+
 
         public ActionResult GameChecker(string name = null)
         {
@@ -24,10 +41,10 @@ namespace fias.Controllers
             }
             else
             {
-                Database Game = new Database();
-                Game.InsertKeyInDataBase();
+              
+                Database.InsertKeyInDataBase();
 
-                return RedirectToAction("GameStarter", "Home", new { Gamekey = Game.generatedKey });
+                return RedirectToAction("GameStarter", "Home", new { Gamekey = Database.generatedKey });
             }
         }
 
