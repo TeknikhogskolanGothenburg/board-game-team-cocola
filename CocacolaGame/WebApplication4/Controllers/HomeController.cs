@@ -12,16 +12,11 @@ namespace WebApplication4.Controllers
     {
         public ActionResult Index()
         {
-
-
-
             return View();
-
-
         }
+
         public ActionResult GameChecker(string name = null)
         {
-
             if (name == null)
             {
                 return RedirectToActionPermanent("CreateGame");
@@ -30,30 +25,23 @@ namespace WebApplication4.Controllers
             {
                 Database Game = new Database();
                 Game.createGame();
-                return RedirectToAction("GameStarter", "Home", new {  name });
+                return RedirectToAction("GameStarter", "Home", new { name });
             }
-
-
         }
+
         public ActionResult CreateGame()
         {
-
             return View();
-            
         }
 
         public ActionResult GameStarter(string name)
         {
-        
             ViewBag.Key = name;
             return View();
-
-
         }
 
         public ActionResult About()
         {
-
             ViewBag.Message = "Your application description page.";
             return View();
         }
@@ -61,7 +49,6 @@ namespace WebApplication4.Controllers
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

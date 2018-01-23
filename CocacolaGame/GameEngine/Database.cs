@@ -8,24 +8,39 @@ using System.Data.Sql;
 
 namespace GameEngine
 {
-   public class Database
+    public class Database
     {
-        private SqlConnection User;
-       public Database()
+        private SqlConnection Connection;
+        public Database()
         {
-            User = new SqlConnection(@"Data Source=DESKTOP-FAGSG73\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
+            Connection = new SqlConnection(@"Data Source=DESKTOP-FAGSG73\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
         }
-        public void createGame()
+        public void CreateGame()
         {
-          
             string query = "INSERT INTO Game([Key]) Values('hgxahxah')";
-            SqlCommand CreateGame = new SqlCommand(query, User);
-            User.Open();
+            SqlCommand CreateGame = new SqlCommand(query, Connection);
+            Connection.Open();
             CreateGame.ExecuteNonQuery();
-           
+            Connection.Close();
+        }
+        public bool CheckGame(string key)
+        {
+
+            string query = "SELECT * FROM Game WHERE [Key] = 'key'";
+            SqlCommand CreateGame = new SqlCommand(query, Connection);
+            Connection.Open();
+            SqlDataReader reader = CreateGame.ExecuteReader();
+            if (reader.HasRows)
+
+            {
+                Connection.Close();
+                return true;
+            }
+            else
+            {
+                Connection.Close();
+                return false;
+            }
         }
     }
-
-    
-
 }
