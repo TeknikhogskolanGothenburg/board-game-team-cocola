@@ -14,6 +14,7 @@ namespace GameEngine
         private SqlConnection Connection;
         public Database()
         {
+            // lenas databasnyckel Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
             Connection = new SqlConnection(@"Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
         }
         public string CreateKey()
