@@ -15,11 +15,25 @@ namespace fias.Controllers
         {
             return View();
         }
-        public ActionResult JoinGameView()
+        public ActionResult JoinGame()
         {
-         
+            string str = Request.Form["name"];
+            if (Request.Form["name"] == "k")
+            {
+                return RedirectToAction("CreateGame", "Home");
+            }
+            else
+            {
+                 return RedirectToAction("CreateGame", "Home");
 
-            return View();
+            }
+        }
+
+
+        public ActionResult JoinGameView( )
+        {
+                return View();
+           
         }
         
         public ActionResult GameController(string name = null)

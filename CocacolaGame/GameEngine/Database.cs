@@ -51,10 +51,10 @@ namespace GameEngine
             }
         }
 
-        public static bool CheckIfKeyExists(string key)
+        public static bool Exists(string TabellName , string TabellObeject, string TabellSearch  )
         {
 
-            string query = "SELECT * FROM Game WHERE [Key] ='" + key + "'";
+            string query = "SELECT * FROM "+TabellName+" WHERE"+TabellObeject+" ='" +TabellSearch + "'";
             SqlCommand CreateGame = new SqlCommand(query, Connection);
             Connection.Open();
             SqlDataReader reader = CreateGame.ExecuteReader();
