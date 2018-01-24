@@ -99,11 +99,28 @@ namespace GameEngine
                 return false;
             }
         }
-        public static void InsertNameInDatabase(string name)
+
+        public static bool InsertToJoin(string JoinTableName, string JoinTableObject1, string JoinTableObject2, string TableInsearch1, string TableInsearch2)
         {
+            
+                try
+                {
+                    string query = "INSERT INTO " + JoinTableName + "(" + JoinTableObject1 + ", " + JoinTableObject2 + ") Values('" + TableInsearch1 + "', '" + TableInsearch2 + "')";
+                    SqlCommand CreateGame = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    CreateGame.ExecuteNonQuery();
+                    Connection.Close();
+                    return true;
+                }
+                catch
+                {
+                    Connection.Close();
+                    return false;
+                }
 
-            Insert("Player", "Nickname", name);
-
+            
+           
         }
+
     }
 }

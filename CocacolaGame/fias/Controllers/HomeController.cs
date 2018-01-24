@@ -18,19 +18,13 @@ namespace fias.Controllers
         public ActionResult JoinGame()
         {
             string str = Request.Form["name"];
-            if (Request.Form["name"] == null || string.IsNullOrWhiteSpace(Request.Form["name"]))
+            if (Request.Form["name"] == "k")
             {
-                return RedirectToAction("JoinGameView", "Home");
+                return RedirectToAction("CreateGame", "Home");
             }
-            else if (Request.Form["GameKey"] == null || string.IsNullOrWhiteSpace(Request.Form["GameKey"]))
-            {
-                return RedirectToAction("JoinGameView", "Home");
-                //GameKey
-            }
-
             else
             {
-                 return RedirectToAction("JoinGameView", "Home");
+                 return RedirectToAction("CreateGame", "Home");
 
             }
         }
@@ -48,10 +42,15 @@ namespace fias.Controllers
             {
                 return RedirectToAction("CreateGame","Home");
             }
+            else if(Database.Exists("Player", "Nickname", name))
+            {
+                return RedirectToAction("CreateGame", "Home");
+            }
             else
             {
-              
+                Database.Insert("Player", "Nickname", name); 
                 Database.InsertKeyInDataBase();
+                Database.InsertToJoin("GamePlayer", "KeyID", "NicknameID", Database.generatedKey, name);
 
                 return RedirectToAction("GameStarter", "Home", new { Gamekey = Database.generatedKey });
             }
