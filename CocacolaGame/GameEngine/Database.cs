@@ -121,6 +121,28 @@ namespace GameEngine
             
            
         }
+        //public static string GetNicknameByKey (string key)
+        //{
+        //    try
+        //    {
+        //        string query = "SELECT NicknameID FROM GamePlayer WHERE KeyID = '" + key + "'";
+        //        SqlCommand CreateGame = new SqlCommand(query, Connection);
+        //        Connection.Open();
+        //        SqlDataReader reader = CreateGame.ExecuteReader();
+
+        //        if (reader.HasRows)
+        //        {
+        //            string name = reader["NicknameID"].ToString();
+        //        }
+        //        Connection.Close();
+                
+        //    }
+        //    catch
+        //    {
+        //        Connection.Close();
+                
+        //    }
+        //}
 
     }
 }
