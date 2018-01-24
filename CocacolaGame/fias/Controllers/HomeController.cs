@@ -55,6 +55,7 @@ namespace fias.Controllers
                 return RedirectToAction("GameStarter", "Home", new { Gamekey = Database.generatedKey });
             }
         }
+        //hejhej
 
         public ActionResult CreateGame()
         {
