@@ -18,13 +18,19 @@ namespace fias.Controllers
         public ActionResult JoinGame()
         {
             string str = Request.Form["name"];
-            if (Request.Form["name"] == "k")
+            if (Request.Form["name"] == null || string.IsNullOrWhiteSpace(Request.Form["name"]))
             {
-                return RedirectToAction("CreateGame", "Home");
+                return RedirectToAction("JoinGameView", "Home");
             }
+            else if (Request.Form["GameKey"] == null || string.IsNullOrWhiteSpace(Request.Form["GameKey"]))
+            {
+                return RedirectToAction("JoinGameView", "Home");
+                //GameKey
+            }
+
             else
             {
-                 return RedirectToAction("CreateGame", "Home");
+                 return RedirectToAction("JoinGameView", "Home");
 
             }
         }
