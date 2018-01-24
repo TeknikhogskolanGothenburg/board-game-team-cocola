@@ -12,7 +12,7 @@ namespace GameEngine
     public class Database
     {
         public  static string generatedKey;
-        private static SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True;");;
+        private static SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True;");
         
         private static string CreateKey()
         {
