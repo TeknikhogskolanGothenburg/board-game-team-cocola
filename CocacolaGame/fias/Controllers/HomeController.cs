@@ -21,23 +21,12 @@ namespace fias.Controllers
 
             return View();
         }
-        //public ActionResult JoinGameLogic( string key)
-        //{
-        //    //HttpCookie s;
-        //    //if (Database.CheckIfKeyExists(key))
-        //    //{
-        //    //    HttpCookie s = new HttpCookie("Game")
-        //    //}
-           
-        //}
-
-
-
+        
         public ActionResult GameChecker(string name = null)
         {
-            if (name == null)
+            if (name == null || string.IsNullOrWhiteSpace(name))
             {
-                return RedirectToActionPermanent("CreateGame");
+                return RedirectToAction("CreateGame","Home");
             }
             else
             {
