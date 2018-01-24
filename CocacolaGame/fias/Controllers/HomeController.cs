@@ -22,7 +22,7 @@ namespace fias.Controllers
             return View();
         }
         
-        public ActionResult GameChecker(string name = null)
+        public ActionResult GameController(string name = null)
         {
             if (name == null || string.IsNullOrWhiteSpace(name))
             {
@@ -45,11 +45,19 @@ namespace fias.Controllers
 
         public ActionResult GameStarter(string Gamekey)
         {
-            ViewBag.Key = Gamekey;
-            return View();
+            if (Database.CheckIfKeyExists(Gamekey) == true)
+            {
+                ViewBag.Key = Gamekey;
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("CreateGame");
+            }
+
         }
 
-     
+
     }
 
 }
