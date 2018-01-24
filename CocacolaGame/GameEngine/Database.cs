@@ -33,28 +33,27 @@ namespace GameEngine
         public static void InsertKeyInDataBase()
         {
             bool checker = true;
-            while (checker)
+            int i = 0;
+            while (checker && i < 10)
             {
-                generatedKey = CreateKey();
-
-                if (!CheckIfKeyExists(generatedKey))
+                
+             
+                if (Insert("Game","[Key]", CreateKey()))
                 {
-                    string query = "INSERT INTO Game([Key]) Values('" + generatedKey + "')";
-                    SqlCommand CreateGame = new SqlCommand(query, Connection);
-                    Connection.Open();
-                    CreateGame.ExecuteNonQuery();
-                    Connection.Close();
+
+                    
                     checker = false;
 
 
                 }
+                i++;
             }
         }
 
-        public static bool Exists(string TabellName , string TabellObeject, string TabellSearch  )
+        public static bool Exists(string TableName , string TableObject, string TableSearch  )
         {
 
-            string query = "SELECT * FROM "+TabellName+" WHERE"+TabellObeject+" ='" +TabellSearch + "'";
+            string query = "SELECT * FROM "+TableName+" WHERE "+TableObject+" = '" +TableSearch + "'";
             SqlCommand CreateGame = new SqlCommand(query, Connection);
             Connection.Open();
             SqlDataReader reader = CreateGame.ExecuteReader();
@@ -69,6 +68,42 @@ namespace GameEngine
                 Connection.Close();
                 return false;
             }
+        }
+
+        public static bool Insert(string TableName, string TableObject, string TableInsearch)
+        {
+            if (!Exists(TableName, TableObject, TableInsearch))
+            {
+                try
+                {
+                    string query = "INSERT INTO " + TableName + "(" + TableObject + ") Values('" + TableInsearch + "')";
+                    SqlCommand CreateGame = new SqlCommand(query, Connection);
+                    Connection.Open();
+                    CreateGame.ExecuteNonQuery();
+                    Connection.Close();
+                    generatedKey = TableInsearch;
+                    return true;
+                }
+                catch
+                {
+                    Connection.Close();
+                    generatedKey = "test";
+                    return false;
+                }
+
+            }
+            else
+            {
+                Connection.Close();
+                generatedKey = "test1";
+                return false;
+            }
+        }
+        public static void InsertNameInDatabase(string name)
+        {
+
+            Insert("Player", "Nickname", name);
+
         }
     }
 }

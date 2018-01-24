@@ -59,7 +59,7 @@ namespace fias.Controllers
 
         public ActionResult GameStarter(string Gamekey)
         {
-            if (Database.CheckIfKeyExists(Gamekey) == true)
+            if (Database.Exists("Game", "[Key]", Gamekey) == true)
             {
                 ViewBag.Key = Gamekey;
                 return View();
