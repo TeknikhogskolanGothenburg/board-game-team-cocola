@@ -1,4 +1,4 @@
-﻿@model GameEngine.Player;
+﻿@model List<GameEngine.Player>
 @{
 
     ViewBag.Title = "GamestarterGuest";
@@ -11,7 +11,7 @@
 {
    
         <td>
-            @Html.DisplayFor(modelItem => Model.Name)
+            <span>@item.Name</span>
         </td>
 }
 }
