@@ -38,7 +38,7 @@ namespace fias.Controllers
                         string[] Values = new string[2] { Request.Form["GameKey"], Request.Form["name"] };
                         SqlDbType[] Datatypes = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.VarChar };
                         Database.InsertToDataBase("GamePlayer", Columns, Values,Datatypes);
-                        return RedirectToAction("GamestarterGuest", "Home");
+                        return RedirectToAction("GamestarterGuest", "Home", new { Gamekey = Request.Form["GameKey"] });
                     }
                     catch
                     {
@@ -86,10 +86,12 @@ namespace fias.Controllers
             }
         }
 
-        public ActionResult GamestarterGuest()
+        public ActionResult GamestarterGuest( string GameKey)
         {
+            List<Player> Players =  new List<Player>();
+            Database.GetData(Players,GameKey);
 
-            return View();
+            return View(Players);
         }
 
 

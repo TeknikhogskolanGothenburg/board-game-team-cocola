@@ -1,7 +1,17 @@
-﻿
+﻿@model GameEngine.Player;
 @{
+
     ViewBag.Title = "GamestarterGuest";
+
 }
 
 <h2>GamestarterGuest</h2>
-
+@{
+    foreach (var item in Model)
+{
+   
+        <td>
+            @Html.DisplayFor(modelItem => Model.Name)
+        </td>
+}
+}

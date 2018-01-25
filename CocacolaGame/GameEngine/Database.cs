@@ -4,12 +4,12 @@ using System.Data.SqlClient;
 using System.Data.Sql;
 using System;
 using System.Data;
+using System.Collections.Generic;
 
 namespace GameEngine
 {
     // Wilmar DatabaseNyckel Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
     // lenas databasnyckel Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
-    // agustins databasnyckel Data Source=DESKTOP-FAGSG73\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
 
     public class Database
     {
@@ -97,36 +97,29 @@ namespace GameEngine
                 return false;
             }
         }
+        public static void GetData(List<Player> Players, string GameKey)
+        {
+           
+          
+            Connection.Open();
+          
+              Command = new SqlCommand("Select NickNameID FROM GamePlayer Where KeyID = @KeyID",Connection);
 
-        //public static bool Insert(string TableName, string TableObject, string TableInsearch)
-        //{
-        //    if (!Exists(TableName, TableObject, TableInsearch))
-        //    {
-        //        try
-        //        {
-        //            string query = "INSERT INTO " + TableName + "(" + TableObject + ") Values('" + TableInsearch + "')";
-        //            SqlCommand CreateGame = new SqlCommand(query, Connection);
-        //            Connection.Open();
-        //            CreateGame.ExecuteNonQuery();
-        //            Connection.Close();
-        //            generatedKey = TableInsearch;
-        //            return true;
-        //        }
-        //        catch
-        //        {
-        //            Connection.Close();
-        //            generatedKey = "test";
-        //            return false;
-        //        }
+            Command.Parameters.Add("@KeyID", SqlDbType.VarChar).Value = GameKey;
+            SqlDataReader reader = Command.ExecuteReader();
 
-        //    }
-        //    else
-        //    {
-        //        Connection.Close();
-        //        generatedKey = "test1";
-        //        return false;
-        //    }
-        //}
+                while (reader.Read())
+                {
+                Player player = new Player();
+                player.Name  = reader["NickNameID"].ToString();
+                Players.Add(player);
+                   
+                }
+
+           
+        }
+           
+        
 
         public static bool InsertToDataBase(string TableName, string[] ColumnNames, string[]Values, SqlDbType[] Datatype)
         {
@@ -167,28 +160,7 @@ namespace GameEngine
             
            
         }
-        //public static string GetNicknameByKey (string key)
-        //{
-        //    try
-        //    {
-        //        string query = "SELECT NicknameID FROM GamePlayer WHERE KeyID = '" + key + "'";
-        //        SqlCommand CreateGame = new SqlCommand(query, Connection);
-        //        Connection.Open();
-        //        SqlDataReader reader = CreateGame.ExecuteReader();
-
-        //        if (reader.HasRows)
-        //        {
-        //            string name = reader["NicknameID"].ToString();
-        //        }
-        //        Connection.Close();
-                
-        //    }
-        //    catch
-        //    {
-        //        Connection.Close();
-                
-        //    }
-        //}
+       
 
     }
 }
