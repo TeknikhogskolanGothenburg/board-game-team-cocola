@@ -34,7 +34,7 @@ namespace fias.Controllers
                     try
                     {
 
-                        string[] Columns = new string[2] { "KeyID", "Nickname" };
+                        string[] Columns = new string[2] { "KeyID", "NicknameID" };
                         string[] Values = new string[2] { Request.Form["GameKey"], Request.Form["name"] };
                         SqlDbType[] Datatypes = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.VarChar };
                         Database.InsertToDataBase("GamePlayer", Columns, Values,Datatypes);
@@ -85,7 +85,13 @@ namespace fias.Controllers
                 }
             }
         }
-        //hejhej
+
+        public ActionResult GamestarterGuest()
+        {
+
+            return View();
+        }
+
 
         public ActionResult CreateGame()
         {
