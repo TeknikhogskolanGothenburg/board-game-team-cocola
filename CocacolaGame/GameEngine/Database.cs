@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 using System.Data.Sql;
 using System;
+using System.Data;
 
 namespace GameEngine
 {
@@ -12,105 +13,149 @@ namespace GameEngine
     public class Database
     {
         public  static string generatedKey;
-        private static SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True;");
+        private static SqlCommand Command { get; set; }
+        private static SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True;");
         
-        private static string CreateKey()
+        public static string CreateGameKey()
         {
-
-            var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var stringChars = new char[5];
-            var random = new Random();
-
-            for (int i = 0; i < stringChars.Length; i++)
+            SqlDbType[] Datatype = new SqlDbType[1]{ SqlDbType.VarChar };
+            string[] columns = new string[1] {"GameKey"};
+            string[] values = new string[1] {""};
+            bool Check = false;
+            int ii = 0;
+            while (!Check && ii < 100)
             {
-                stringChars[i] = chars[random.Next(chars.Length)];
+                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var stringChars = new char[5];
+                var random = new Random();
+
+                for (int i = 0; i < stringChars.Length; i++)
+                {
+                    stringChars[i] = chars[random.Next(chars.Length)];
+                }
+
+            values[0] = new String(stringChars);
+
+                if (InsertToDataBase("Game", columns, values,Datatype))
+                {
+                    return values[0];
+                }
+
+                ii++;
             }
 
-            generatedKey = new String(stringChars);
-            return generatedKey;
+            return null;
         }
 
-        public static void InsertKeyInDataBase()
-        {
-            bool checker = true;
-            int i = 0;
-            while (checker && i < 10)
-            {
+        //public static void InsertKeyInDataBase()
+        //{
+        //    bool checker = true;
+        //    int i = 0;
+        //    while (checker && i < 10)
+        //    {
                 
              
-                if (Insert("Game","[Key]", CreateKey()))
-                {
+        //        if (Insert("Game","[Key]", CreateKey()))
+        //        {
 
-                    
-                    checker = false;
+        //         generatedKey =
+        //           checker = false;
 
 
-                }
-                i++;
-            }
-        }
+        //        }
+        //        i++;
+        //    }
+        //}
 
-        public static bool Exists(string TableName , string TableObject, string TableSearch  )
+        public static bool Exists(string TableName , string ColumnName, string DataSearch , SqlDbType dbType )
         {
-
-            string query = "SELECT * FROM "+TableName+" WHERE "+TableObject+" = '" +TableSearch + "'";
-            SqlCommand CreateGame = new SqlCommand(query, Connection);
-            Connection.Open();
-            SqlDataReader reader = CreateGame.ExecuteReader();
-            if (reader.HasRows)
-
+            try
             {
-                Connection.Close();
-                return true;
-            }
-            else
-            {
-                Connection.Close();
-                return false;
-            }
-        }
 
-        public static bool Insert(string TableName, string TableObject, string TableInsearch)
-        {
-            if (!Exists(TableName, TableObject, TableInsearch))
-            {
-                try
+                string query = "SELECT * FROM " + TableName + " WHERE " + ColumnName + " = " + "@" + ColumnName;
+                Command = new SqlCommand(query, Connection);
+                Command.Parameters.Add("@" + ColumnName, dbType).Value = DataSearch;
+                Connection.Open();
+
+                SqlDataReader reader = Command.ExecuteReader();
+                if (reader.HasRows)
+
                 {
-                    string query = "INSERT INTO " + TableName + "(" + TableObject + ") Values('" + TableInsearch + "')";
-                    SqlCommand CreateGame = new SqlCommand(query, Connection);
-                    Connection.Open();
-                    CreateGame.ExecuteNonQuery();
                     Connection.Close();
-                    generatedKey = TableInsearch;
                     return true;
                 }
-                catch
+                else
                 {
                     Connection.Close();
-                    generatedKey = "test";
                     return false;
                 }
-
             }
-            else
+            catch
             {
                 Connection.Close();
-                generatedKey = "test1";
                 return false;
             }
         }
 
-        public static bool InsertToJoin(string JoinTableName, string JoinTableObject1, string JoinTableObject2, string TableInsearch1, string TableInsearch2)
+        //public static bool Insert(string TableName, string TableObject, string TableInsearch)
+        //{
+        //    if (!Exists(TableName, TableObject, TableInsearch))
+        //    {
+        //        try
+        //        {
+        //            string query = "INSERT INTO " + TableName + "(" + TableObject + ") Values('" + TableInsearch + "')";
+        //            SqlCommand CreateGame = new SqlCommand(query, Connection);
+        //            Connection.Open();
+        //            CreateGame.ExecuteNonQuery();
+        //            Connection.Close();
+        //            generatedKey = TableInsearch;
+        //            return true;
+        //        }
+        //        catch
+        //        {
+        //            Connection.Close();
+        //            generatedKey = "test";
+        //            return false;
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        Connection.Close();
+        //        generatedKey = "test1";
+        //        return false;
+        //    }
+        //}
+
+        public static bool InsertToDataBase(string TableName, string[] ColumnNames, string[]Values, SqlDbType[] Datatype)
         {
-            
-                try
+
+            try
+            {
+                string fix = string.Empty;
+                string fix2 = string.Empty;
+                for (int i = 0; i < ColumnNames.Length; i++)
+                { 
+                 fix += ColumnNames[i] +",";
+                    fix2 += "@"+ColumnNames[i] + ",";
+                 
+                }
+                 fix =  fix.Remove(fix.Length - 1, 1);
+                fix2 = fix2.Remove(fix2.Length - 1, 1);
+                string query = "INSERT INTO " + TableName + " (" + fix + ") Values("+ fix2 +")";
+
+                Command = new SqlCommand(query, Connection);
+
+                for(int i = 0; i < ColumnNames.Length; i++)
                 {
-                    string query = "INSERT INTO " + JoinTableName + "(" + JoinTableObject1 + ", " + JoinTableObject2 + ") Values('" + TableInsearch1 + "', '" + TableInsearch2 + "')";
-                    SqlCommand CreateGame = new SqlCommand(query, Connection);
-                    Connection.Open();
-                    CreateGame.ExecuteNonQuery();
-                    Connection.Close();
-                    return true;
+                    string fixer = "@" + ColumnNames[i];
+                    Command.Parameters.Add(fixer,Datatype[i] ).Value = Values[i];
+              
+                }
+                Connection.Open();
+                Command.ExecuteNonQuery();
+                Connection.Close();
+                return true;
                 }
                 catch
                 {

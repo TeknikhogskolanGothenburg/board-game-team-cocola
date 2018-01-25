@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using GameEngine;
+using System.Data;
 
 namespace fias.Controllers
 {
@@ -17,16 +18,39 @@ namespace fias.Controllers
         }
         public ActionResult JoinGame()
         {
-            string str = Request.Form["name"];
-            if (Request.Form["name"] == "k")
-            {
-                return RedirectToAction("CreateGame", "Home");
-            }
+          
+                if (Request.Form["name"] == null || string.IsNullOrWhiteSpace(Request.Form["name"]))
+                {
+                    return RedirectToAction("JoinGameView", "Home");
+                }
+                else if (Request.Form["GameKey"] == null || string.IsNullOrWhiteSpace(Request.Form["GameKey"]))
+                {
+                    return RedirectToAction("JoinGameView", "Home");
+                }
+                else if (Database.Exists("GamePlayer", "KeyID", Request.Form["GameKey"], SqlDbType.VarChar))
+            
+                {
+
+                    try
+                    {
+
+                        string[] Columns = new string[2] { "KeyID", "Nickname" };
+                        string[] Values = new string[2] { Request.Form["GameKey"], Request.Form["name"] };
+                        SqlDbType[] Datatypes = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.VarChar };
+                        Database.InsertToDataBase("GamePlayer", Columns, Values,Datatypes);
+                        return RedirectToAction("GamestarterGuest", "Home");
+                    }
+                    catch
+                    {
+                        return RedirectToAction("JoinGameView", "Home");
+                    }
+                }
+            
             else
             {
-                 return RedirectToAction("CreateGame", "Home");
-
+                return RedirectToAction("JoinGameView", "Home");
             }
+        
         }
 
 
@@ -36,23 +60,29 @@ namespace fias.Controllers
            
         }
         
-        public ActionResult GameController(string name = null)
+        public ActionResult GameController()
         {
-            if (name == null || string.IsNullOrWhiteSpace(name))
-            {
-                return RedirectToAction("CreateGame","Home");
-            }
-            else if(Database.Exists("Player", "Nickname", name))
+            if (Request.Form["name"] == null || string.IsNullOrWhiteSpace(Request.Form["name"]))
             {
                 return RedirectToAction("CreateGame", "Home");
             }
+           
             else
             {
-                Database.Insert("Player", "Nickname", name); 
-                Database.InsertKeyInDataBase();
-                Database.InsertToJoin("GamePlayer", "KeyID", "NicknameID", Database.generatedKey, name);
+                try
+                {
+                    string Gamekey = Database.CreateGameKey();
+                    string[] Columns = new string[2] { "KeyID", "NicknameID" };
+                    string[] Vales = new string[2] { Gamekey, Request.Form["name"] };
+                    SqlDbType[] Datatypes = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.VarChar };
+                    Database.InsertToDataBase("GamePlayer", Columns, Vales,Datatypes);
 
-                return RedirectToAction("GameStarter", "Home", new { Gamekey = Database.generatedKey });
+                    return RedirectToAction("GameStarter", "Home", new { Gamekey = Gamekey });
+                }
+                catch
+                {
+                    return RedirectToAction("CreateGame", "Home");
+                }
             }
         }
         //hejhej
@@ -65,7 +95,7 @@ namespace fias.Controllers
 
         public ActionResult GameStarter(string Gamekey)
         {
-            if (Database.Exists("Game", "[Key]", Gamekey) == true)
+            if (Database.Exists("GamePlayer", "KeyID", Gamekey,SqlDbType.VarChar) == true)
             {
                 ViewBag.Key = Gamekey;
                 return View();
