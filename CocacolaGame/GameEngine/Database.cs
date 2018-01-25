@@ -9,6 +9,7 @@ namespace GameEngine
 {
     // Wilmar DatabaseNyckel Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
     // lenas databasnyckel Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
+    // agustins databasnyckel Data Source=DESKTOP-FAGSG73\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
 
     public class Database
     {
