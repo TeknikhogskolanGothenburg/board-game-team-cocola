@@ -1,0 +1,35 @@
+﻿@model GameEngine.Game
+@{
+    ViewBag.Title = "GameLobby";
+
+}
+<head>
+    <meta http-equiv="refresh" content="5">
+</head>
+<h2>GameLobby</h2>
+@{
+   <h1>@Model.GetGameKey</h1>
+
+    foreach (var item in Model.Players)
+    {
+
+        <td>
+            <span>Player: @item.Nickname</span> <br />
+             @if (Model._CurrentPlayer.IsAdmin == 1)
+                 {
+
+
+                    <h2>Create Game</h2>
+                    <a href="/Home/RunGame">
+                        <input id="Button1" type="button" value="Start Game" />
+                    </a>
+
+                 }
+    }
+        </td>
+        }
+    
+
+   
+
+  }

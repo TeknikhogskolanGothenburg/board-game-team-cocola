@@ -1,27 +1,24 @@
-﻿using System.Text;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Data.SqlClient;
-using System.Data.Sql;
-using System;
 using System.Data;
-using System.Collections.Generic;
 
 namespace GameEngine
 {
-    // Wilmar DatabaseNyckel Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
-    // lenas databasnyckel Data Source=LAPTOP-AMB9IU8B\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True
-
-    public class Database
+   public static class DataBase
     {
-        public  static string generatedKey;
         private static SqlCommand Command { get; set; }
-        private static SqlConnection Connection = new SqlConnection(@"Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True;");
-        
-        public static string CreateGameKey()
+        private static SqlDataReader Reader { get; set; }
+        private static SqlConnection SqlConnector = new SqlConnection(@"Data Source=LAPTOP-6J4IQ728\SQLEXPRESS;Initial Catalog=GameDB;Integrated Security=True");
+
+       public static string CreateGameKey()
         {
-            SqlDbType[] Datatype = new SqlDbType[1]{ SqlDbType.VarChar };
-            string[] columns = new string[1] {"GameKey"};
-            string[] values = new string[1] {""};
+            SqlDbType[] Datatype = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.Int};
+            string[] columns = new string[2] { "GameKey","GameStatus" };
+            string[] values = new string[2] { "","0" };
             bool Check = false;
             int ii = 0;
             while (!Check && ii < 100)
@@ -35,9 +32,9 @@ namespace GameEngine
                     stringChars[i] = chars[random.Next(chars.Length)];
                 }
 
-            values[0] = new String(stringChars);
+                values[0] = new String(stringChars);
 
-                if (InsertToDataBase("Game", columns, values,Datatype))
+                if (InsertToDataBase("Game", columns, values, Datatype))
                 {
                     return values[0];
                 }
@@ -48,80 +45,149 @@ namespace GameEngine
             return null;
         }
 
-        //public static void InsertKeyInDataBase()
-        //{
-        //    bool checker = true;
-        //    int i = 0;
-        //    while (checker && i < 10)
-        //    {
-                
-             
-        //        if (Insert("Game","[Key]", CreateKey()))
-        //        {
-
-        //         generatedKey =
-        //           checker = false;
 
 
-        //        }
-        //        i++;
-        //    }
-        //}
 
-        public static bool Exists(string TableName , string ColumnName, string DataSearch , SqlDbType dbType )
+        public static bool Exists(string TableName, string ColumnName, string DataSearch, SqlDbType dbType)
         {
             try
             {
 
                 string query = "SELECT * FROM " + TableName + " WHERE " + ColumnName + " = " + "@" + ColumnName;
-                Command = new SqlCommand(query, Connection);
+                Command = new SqlCommand(query, SqlConnector);
                 Command.Parameters.Add("@" + ColumnName, dbType).Value = DataSearch;
-                Connection.Open();
+                SqlConnector.Open();
 
-                SqlDataReader reader = Command.ExecuteReader();
-                if (reader.HasRows)
+                Reader = Command.ExecuteReader();
+                if (Reader.HasRows)
 
                 {
-                    Connection.Close();
+                    Reader.Close();
+                    SqlConnector.Close();
                     return true;
                 }
                 else
                 {
-                    Connection.Close();
+                    Reader.Close();
+                    SqlConnector.Close();
                     return false;
                 }
             }
             catch
             {
-                Connection.Close();
+                Reader.Close();
+                SqlConnector.Close();
                 return false;
             }
         }
-        public static void GetData(List<Player> Players, string GameKey)
+
+        public static void GetPlayers(List<Player> Players, string GameKey)
         {
-           
-          
-            Connection.Open();
-          
-              Command = new SqlCommand("Select NickNameID FROM GamePlayer Where KeyID = @KeyID",Connection);
 
-            Command.Parameters.Add("@KeyID", SqlDbType.VarChar).Value = GameKey;
-            SqlDataReader reader = Command.ExecuteReader();
+            if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+            {
+                SqlConnector.Open();
 
-                while (reader.Read())
+                Command = new SqlCommand("Select * FROM GamePlayer Where GameKeyID = @GameKeyID", SqlConnector);
+
+                Command.Parameters.Add("@GameKeyID", SqlDbType.VarChar).Value = GameKey;
+                Reader = Command.ExecuteReader();
+
+                while (Reader.Read())
                 {
-                Player player = new Player();
-                player.Name  = reader["NickNameID"].ToString();
-                Players.Add(player);
-                   
+                    Player player = new Player();
+                    player.Nickname = Reader["Player"].ToString();
+                    player.IsAdmin = int.Parse(Reader["IsAdmin"].ToString());
+                    player.Attemp = int.Parse(Reader["Attemp"].ToString());
+                    player.Attemp = int.Parse(Reader["Points"].ToString());
+                    Players.Add(player);
+
                 }
 
-           
+                Reader.Close();
+                SqlConnector.Close();
+            }
         }
-           
-        
+            public static void GetPlayers(Player player, string GameKey, string name)
+            {
 
-        public static bool InsertToDataBase(string TableName, string[] ColumnNames, string[]Values, SqlDbType[] Datatype)
+                if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+                {
+                    SqlConnector.Open();
+
+                    Command = new SqlCommand("Select * FROM GamePlayer Where GameKeyID = @GameKeyID AND Player = @Player", SqlConnector);
+
+                    Command.Parameters.Add("@GameKeyID", SqlDbType.VarChar).Value = GameKey;
+                Command.Parameters.Add("@Player", SqlDbType.VarChar).Value = name;
+                Reader = Command.ExecuteReader();
+
+                    while (Reader.Read())
+                    {
+                   
+                        player.Nickname = Reader["Player"].ToString();
+                    player.IsAdmin = int.Parse(Reader["IsAdmin"].ToString());
+                      player.Points = int.Parse(Reader["Points"].ToString());
+                    player.Points = int.Parse(Reader["Attemp"].ToString());
+                  
+
+
+                }
+
+                    Reader.Close();
+                    SqlConnector.Close();
+                }
+
+            }
+
+        
+        public static int GetGameStatus(string GameKey)
+        {
+            int Returner = 0; 
+            if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+            {
+                SqlConnector.Open();
+
+                Command = new SqlCommand("Select GameStatus FROM Game Where GameKey = @GameKey", SqlConnector);
+
+                Command.Parameters.Add("@GameKey", SqlDbType.VarChar).Value = GameKey;
+                Reader = Command.ExecuteReader();
+
+                while (Reader.Read())
+                {
+                  
+
+                 Returner  = int.Parse(Reader["GameStatus"].ToString());
+                    
+
+                }
+               
+            }
+            Reader.Close();
+            SqlConnector.Close();
+            return Returner;
+        }
+
+        public static void ChangeGameStatus(int Gamestatus, string GameKey)
+        {
+            try
+            {
+                string query = "UPDATE Game SET GameStatus = @GameStatus WHERE GameKey = @GameKey";
+                Command = new SqlCommand(query, SqlConnector);
+                Command.Parameters.Add("@GameStatus", SqlDbType.Int).Value = Gamestatus;
+                Command.Parameters.Add("@GameKey", SqlDbType.VarChar).Value = GameKey;
+                SqlConnector.Open();
+                Command.ExecuteNonQuery();
+            }
+            catch
+            {
+                SqlConnector.Close();
+            }
+            finally
+            {
+                SqlConnector.Close();
+            }
+        }
+        public static bool InsertToDataBase(string TableName, string[] ColumnNames, string[] Values, SqlDbType[] Datatype)
         {
 
             try
@@ -129,38 +195,63 @@ namespace GameEngine
                 string fix = string.Empty;
                 string fix2 = string.Empty;
                 for (int i = 0; i < ColumnNames.Length; i++)
-                { 
-                 fix += ColumnNames[i] +",";
-                    fix2 += "@"+ColumnNames[i] + ",";
-                 
+                {
+                    fix += ColumnNames[i] + ",";
+                    fix2 += "@" + ColumnNames[i] + ",";
+
                 }
-                 fix =  fix.Remove(fix.Length - 1, 1);
+                fix = fix.Remove(fix.Length - 1, 1);
                 fix2 = fix2.Remove(fix2.Length - 1, 1);
-                string query = "INSERT INTO " + TableName + " (" + fix + ") Values("+ fix2 +")";
+                string query = "INSERT INTO " + TableName + " (" + fix + ") Values(" + fix2 + ")";
 
-                Command = new SqlCommand(query, Connection);
+                Command = new SqlCommand(query, SqlConnector);
 
-                for(int i = 0; i < ColumnNames.Length; i++)
+                for (int i = 0; i < ColumnNames.Length; i++)
                 {
                     string fixer = "@" + ColumnNames[i];
-                    Command.Parameters.Add(fixer,Datatype[i] ).Value = Values[i];
-              
-                }
-                Connection.Open();
-                Command.ExecuteNonQuery();
-                Connection.Close();
-                return true;
-                }
-                catch
-                {
-                    Connection.Close();
-                    return false;
-                }
+                    Command.Parameters.Add(fixer, Datatype[i]).Value = Values[i];
 
-            
-           
+                }
+                SqlConnector.Open();
+                Command.ExecuteNonQuery();
+                SqlConnector.Close();
+                return true;
+            }
+            catch
+            {
+                SqlConnector.Close();
+                return false;
+            }
+
+
+
         }
-       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
+
+
+
+
+
+
+
+
+
+
 }

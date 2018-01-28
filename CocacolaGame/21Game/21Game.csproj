@@ -8,12 +8,12 @@
     <ProductVersion>
     </ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{B860740D-A0C8-4083-8ABE-CDFE041C0BC4}</ProjectGuid>
+    <ProjectGuid>{00069DB3-9B14-40C1-97FC-7205419770D4}</ProjectGuid>
     <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>fias</RootNamespace>
-    <AssemblyName>fias</AssemblyName>
+    <RootNamespace>_21Game</RootNamespace>
+    <AssemblyName>21Game</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
@@ -102,9 +102,11 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\CreateGame.cshtml" />
-    <Content Include="Views\Home\GameStarter.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Home\NewGame.cshtml" />
+    <Content Include="Views\Home\JoinGame.cshtml" />
+    <Content Include="Views\Home\GameLobby.cshtml" />
+    <Content Include="Views\Home\RunGame.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -120,12 +122,9 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <None Include="packages.config" />
-    <Content Include="Views\Home\Shared\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Shared\Layout.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Shared\_ViewStart.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
-    <Content Include="Views\Home\JoinGameView.cshtml" />
-    <Content Include="Views\Home\GamestarterGuest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -139,7 +138,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GameEngine\GameEngine.csproj">
-      <Project>{ebfe1025-ba9c-4ee8-bfd2-74250799ceb0}</Project>
+      <Project>{725db655-5a75-4505-b532-501be4815119}</Project>
       <Name>GameEngine</Name>
     </ProjectReference>
   </ItemGroup>
@@ -156,9 +155,9 @@
         <WebProjectProperties>
           <UseIIS>True</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>52805</DevelopmentServerPort>
+          <DevelopmentServerPort>58631</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:52805/</IISUrl>
+          <IISUrl>http://localhost:58631/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
