@@ -74,20 +74,26 @@ namespace _21Game.Controllers
                 if (!StringController.IsEmpty(Request.Form["NameInput"]) && !StringController.IsEmpty(Request.Form["GameKey"]))
                 {
                     GetGame = new Game(Request.Form["Gamekey"]);
-                    GetGame.InsertPlayer(Request.Form["NameInput"], Game._IsAdmin.NO);
-                    HttpCookie[] cookie = new HttpCookie[] { new HttpCookie("GameKey"), new HttpCookie("Player"), new HttpCookie("AuthID") };
-                    string authId = Guid.NewGuid().ToString();
-                    cookie[0].Value = GetGame.GetGameKey;
-                    cookie[1].Value = GetGame._CurrentPlayer.Nickname;
-                    cookie[2].Value = authId;
-                    Session["AuthID"] = authId;
-                    foreach (HttpCookie c in cookie)
-                    {
-                        Response.Cookies.Add(c);
-                    }
-                    /*new { GameKey= GetGame.GetGameKey, Player = GetGame._CurrentPlayer.Nickname }*/
+                    if (GetGame.InsertPlayer(Request.Form["NameInput"], Game._IsAdmin.NO))
+                        {
+                        HttpCookie[] cookie = new HttpCookie[] { new HttpCookie("GameKey"), new HttpCookie("Player"), new HttpCookie("AuthID") };
+                        string authId = Guid.NewGuid().ToString();
+                        cookie[0].Value = GetGame.GetGameKey;
+                        cookie[1].Value = GetGame._CurrentPlayer.Nickname;
+                        cookie[2].Value = authId;
+                        Session["AuthID"] = authId;
+                        foreach (HttpCookie c in cookie)
+                        {
+                            Response.Cookies.Add(c);
+                        }
+                        /*new { GameKey= GetGame.GetGameKey, Player = GetGame._CurrentPlayer.Nickname }*/
 
-                    return RedirectToAction("GameLobby", "Home");
+                        return RedirectToAction("GameLobby", "Home");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -163,10 +169,10 @@ namespace _21Game.Controllers
                         GetGame = new Game(cookiekey.Value.ToString());
                         GetGame.GetCurrentPlayer(cookieUser.Value.ToString());
                         GetGame.ReadGameStatus(GetGame.GetGameKey);
-                        GetGame.ReadGameStatus(cookiekey.Value.ToString());
+                        GetGame.ReadGameStatus(GetGame.GetGameKey);
                         GetGame.ChangeGameStatus(true);
                         
-                        return View();
+                        return View(GetGame);
                     }
                     else
                     {

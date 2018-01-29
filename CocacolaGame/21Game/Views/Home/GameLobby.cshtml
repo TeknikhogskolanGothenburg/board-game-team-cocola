@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "GameLobby";
 
+
 }
 <head>
     <meta http-equiv="refresh" content="5">
@@ -15,21 +16,19 @@
 
         <td>
             <span>Player: @item.Nickname</span> <br />
-             @if (Model._CurrentPlayer.IsAdmin == 1)
-                 {
-
-
-                    <h2>Create Game</h2>
-                    <a href="/Home/RunGame">
-                        <input id="Button1" type="button" value="Start Game" />
-                    </a>
-
-                 }
-    }
-        </td>
-        }
+           
     
+        </td>
+    }
 
-   
+    if (Model._CurrentPlayer.IsAdmin == 1)
+    {
+         <h2>Click to Start the Game</h2>
+          <a href="/Home/RunGame">
+           <input id="Button1" type="button" value="Start Game" />
+           </a>
 
-  }
+    }
+
+
+}

@@ -1,7 +1,31 @@
-﻿
+﻿@model GameEngine.Game
 @{
     ViewBag.Title = "RunGame";
 }
 
 <h2>RunGame</h2>
+<div style="width:100%; background-color:yellow" >
+    @{
 
+        var i = 0;
+        foreach (var item in Model.Players)
+        {
+            i++;
+
+            <div style="text-align:center; float:left; display:inline-block; width:33.33%; background-color:aqua; margin-left:20px; margin-bottom:20px;">
+             <h1>
+              Player @i<br />
+              @item.Nickname
+             </h1>
+              Points<br />
+            <h2>@item.Points</h2>
+
+
+            </div>
+
+        }
+
+
+
+    }
+ </div>
