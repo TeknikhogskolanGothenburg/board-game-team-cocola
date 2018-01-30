@@ -9,6 +9,7 @@ namespace GameEngine
 {
     public class Game
     {
+
         public List<Player> Players = new List<Player>();
         public enum _IsAdmin { Yes, NO }
         public Player _CurrentPlayer = new Player();
