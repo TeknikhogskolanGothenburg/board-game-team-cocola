@@ -1,0 +1,162 @@
+﻿
+.indexPhoto {
+    width: 1200px ;
+    height: 750px;
+    top: 0px;
+    left: 0px;
+    position: relative;
+    background-image: url(../Images/index.png)
+}
+
+.newGamePhoto {
+    width: 1280px;
+    height: 844px;
+    top: 0px;
+    left: 0px;
+    position: relative;
+    background-image: url(../Images/newgame.png)
+}
+
+.joinGamePhoto {
+    width: 1280px;
+    height: 844px;
+    top: 0px;
+    left: 0px;
+    position: relative;
+    background-image: url(../../Images/joingame.png)
+}
+
+.gameLobbyPhoto {
+    width: 1280px;
+    height: 844px;
+    top: 0px;
+    left: 0px;
+    position: relative;
+    background-image: url(../../Images/gamelobby.png)
+}
+
+.createGameButton {
+    width: 100px;
+    height: 25px;
+    top: 475px;
+    left: 560px;
+    position: absolute;
+  
+}
+
+.joinGameButton {
+    width: 100px;
+    height: 25px;
+    top: 450px;
+    left: 700px;
+    position: absolute;
+}
+
+#Button1 {
+    border-top: 0px solid #665f24;
+    background: #423928;
+    background: -webkit-gradient(linear, left top, left bottom, from(#7d5f1a), to(#423928));
+    background: -webkit-linear-gradient(top, #7d5f1a, #423928);
+    background: -moz-linear-gradient(top, #7d5f1a, #423928);
+    background: -moz-linear-gradient(top, #7d5f1a, #423928);
+    background: -o-linear-gradient(top, #7d5f1a, #423928);
+    padding: 12px 24px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: #ffcf21;
+    font-size: 18px;
+    font-family: 'Lucida Grande', Helvetica, Arial, Sans-Serif;
+    text-decoration: none;
+    vertical-align: middle;
+    margin-bottom: 100px;
+}
+
+    #Button1:hover {
+        border-top-color: #665229;
+        background: #665229;
+        color: #ebbe38;
+    }
+
+    #Button1:active {
+        border-top-color: #735b24;
+        background: #735b24;
+    }
+
+#Button2 {
+    border-top: 0px solid #665f24;
+    background: #423928;
+    background: -webkit-gradient(linear, left top, left bottom, from(#7d5f1a), to(#423928));
+    background: -webkit-linear-gradient(top, #7d5f1a, #423928);
+    background: -moz-linear-gradient(top, #7d5f1a, #423928);
+    background: -moz-linear-gradient(top, #7d5f1a, #423928);
+    background: -o-linear-gradient(top, #7d5f1a, #423928);
+    padding: 12px 24px;
+    -webkit-border-radius: 40px;
+    -moz-border-radius: 40px;
+    border-radius: 40px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 0px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: #ffcf21;
+    font-size: 18px;
+    font-family: 'Lucida Grande', Helvetica, Arial, Sans-Serif;
+    text-decoration: none;
+    vertical-align: middle;
+    margin-left: 10px;
+}
+
+    #Button2:hover {
+        border-top-color: #665229;
+        background: #665229;
+        color: #ebbe38;
+    }
+
+    #Button2:active {
+        border-top-color: #735b24;
+        background: #735b24;
+    }
+
+.yourName {
+    color: #ffb84d;
+    font-size: 24px;
+    font-family: 'Arial Narrow Bold';
+    text-shadow: -1px -1px 0 #423928, 1px -1px 0 #423928, -1px 1px 0 #423928, 1px 1px 0 #423928;
+    top: 450px;
+    left: 491px;
+    position: absolute;
+}
+
+.boxNewGame {
+    color: #ffb84d;
+    font-size: 24px;
+    font-family: 'Arial Narrow Bold';
+    text-shadow: -1px -1px 0 #423928, 1px -1px 0 #423928, -1px 1px 0 #423928, 1px 1px 0 #423928;
+    top: 450px;
+    left: 620px;
+    position: absolute;
+}
+
+.gameKey {
+    color: #ffb84d;
+    font-size: 24px;
+    font-family: 'Arial Narrow Bold';
+    text-shadow: -1px -1px 0 #423928, 1px -1px 0 #423928, -1px 1px 0 #423928, 1px 1px 0 #423928;
+    top: 475px;
+    left: 500px;
+    position: absolute;
+}
+
+.playerGame {
+    background-color: whitesmoke;
+    width: 300px;
+    height: 300px;
+    top: 250px;
+    left: 450px;
+    position: absolute;
+}

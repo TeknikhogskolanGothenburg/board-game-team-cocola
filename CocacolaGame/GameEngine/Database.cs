@@ -16,9 +16,11 @@ namespace GameEngine
 
        public static string CreateGameKey()
         {
-            SqlDbType[] Datatype = new SqlDbType[2] { SqlDbType.VarChar, SqlDbType.Int};
-            string[] columns = new string[2] { "GameKey","GameStatus" };
-            string[] values = new string[2] { "","0" };
+            Random s = new Random();
+            
+            SqlDbType[] Datatype = new SqlDbType[3] { SqlDbType.VarChar, SqlDbType.Int, SqlDbType.Int };
+            string[] columns = new string[3] { "GameKey","GameStatus","GameRound" };
+            string[] values = new string[3] { "","0",s.Next(1,52).ToString()};
             bool Check = false;
             int ii = 0;
             while (!Check && ii < 100)
@@ -99,7 +101,8 @@ namespace GameEngine
                     player.Nickname = Reader["Player"].ToString();
                     player.IsAdmin = int.Parse(Reader["IsAdmin"].ToString());
                     player.Attemp = int.Parse(Reader["Attemp"].ToString());
-                    player.Attemp = int.Parse(Reader["Points"].ToString());
+                    player.Points = int.Parse(Reader["Points"].ToString());
+                    player.PlayerStand = int.Parse(Reader["PlayerStand"].ToString());
                     Players.Add(player);
 
                 }
@@ -108,6 +111,53 @@ namespace GameEngine
                 SqlConnector.Close();
             }
         }
+        public static void UpdatePlayerStand(string GameKey, string name, bool PlayerStand)
+        {
+            string value = "";
+            if (PlayerStand)
+            {
+                value = "1";
+            }
+            else
+            {
+                value = "0";
+            }
+            try
+            {
+
+                if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+                {
+                    SqlConnector.Open();
+
+                    Command = new SqlCommand("UPDATE GamePlayer SET PlayerStand = @PlayerStand Where GameKeyID = @GameKeyID AND Player = @Player", SqlConnector);
+
+                    Command.Parameters.Add("@GameKeyID", SqlDbType.VarChar).Value = GameKey;
+                    Command.Parameters.Add("@Player", SqlDbType.VarChar).Value = name;
+                    Command.Parameters.Add("@GameRound", SqlDbType.Int).Value = value;
+
+                    Command.ExecuteNonQuery();
+
+             
+
+
+                }
+
+            }
+            catch
+            {
+     
+            }
+            finally
+            {
+                Reader.Close();
+                SqlConnector.Close();
+
+            }
+   
+
+        }
+
+    
             public static void GetPlayers(Player player, string GameKey, string name)
             {
 
@@ -124,10 +174,10 @@ namespace GameEngine
                     while (Reader.Read())
                     {
                    
-                        player.Nickname = Reader["Player"].ToString();
+                     player.Nickname = Reader["Player"].ToString();
                     player.IsAdmin = int.Parse(Reader["IsAdmin"].ToString());
                       player.Points = int.Parse(Reader["Points"].ToString());
-                    player.Points = int.Parse(Reader["Attemp"].ToString());
+                    player.Attemp = int.Parse(Reader["Attemp"].ToString());
                   
 
 
@@ -139,6 +189,7 @@ namespace GameEngine
 
             }
 
+     
         
         public static int GetGameStatus(string GameKey)
         {
@@ -229,6 +280,132 @@ namespace GameEngine
 
 
 
+        public static int ReadGameRound(string GameKey )
+        {
+            int s = 0;
+            try
+            {
+               
+                if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+                {
+                    SqlConnector.Open();
+
+                    Command = new SqlCommand("Select * FROM Game Where GameKeyID = @GameKeyID", SqlConnector);
+
+                    Command.Parameters.Add("@GameKeyID", SqlDbType.VarChar).Value = GameKey;
+
+                    Reader = Command.ExecuteReader();
+
+                    while (Reader.Read())
+                    {
+
+
+                        s = int.Parse(Reader["GameRound"].ToString());
+
+
+
+
+                    }
+
+
+                }
+
+            }
+            catch
+            {
+                
+            }
+            finally
+            {
+                Reader.Close();
+                SqlConnector.Close();
+                
+            }
+            return s;
+
+        }
+
+        public static bool UpdateGameRound(string GameKey, bool GameStart)
+        {
+            bool s = false;
+            string GameValue = string.Empty;
+            switch (GameStart)
+            {
+                case true:
+                    GameValue = "0";
+                    break;
+                case false:
+                    GameValue = "1";
+                    break;
+            }
+            try
+            {
+
+                if (Exists("GamePlayer", "GameKeyID", GameKey, SqlDbType.VarChar))
+                {
+                    SqlConnector.Open();
+
+                    Command = new SqlCommand("UPDATE Game SET GameRound = @GameRound Where GameKey = @GameKey", SqlConnector);
+
+                    Command.Parameters.Add("@GameKey", SqlDbType.VarChar).Value = GameKey;
+                    Command.Parameters.Add("@GameRound", SqlDbType.Int).Value = GameValue;
+
+                    Command.ExecuteNonQuery();
+
+                    s = true;
+
+
+                }
+
+            }
+            catch
+            {
+                s = false;
+            }
+            finally
+            {
+                Reader.Close();
+                SqlConnector.Close();
+
+            }
+            return s;
+
+        }
+
+
+
+
+        public static bool Update(string key , string NickName, string Points , string Attemps)
+        {
+
+            try { 
+            string query = "UPDATE GamePlayer SET Points = @Points , Attemp = @Attemp WHERE PLayer = @player AND GameKeyID = @GameKeyID ";
+
+                Command = new SqlCommand(query, SqlConnector);
+            
+            Command.Parameters.Add("@Points", SqlDbType.Int).Value = Points;
+                  Command.Parameters.Add("@Attemp", SqlDbType.Int).Value = Attemps;
+            Command.Parameters.Add("@player", SqlDbType.VarChar).Value = NickName;
+                  Command.Parameters.Add("@GameKeyID", SqlDbType.VarChar).Value = key;
+            
+                SqlConnector.Open();
+                Command.ExecuteNonQuery();
+               
+                return true;
+            }
+            catch
+            {
+              
+                return false;
+            }
+            finally
+            {
+                SqlConnector.Close();
+            }
+
+
+
+        }
 
 
 

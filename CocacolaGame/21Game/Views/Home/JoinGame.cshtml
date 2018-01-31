@@ -3,11 +3,27 @@
     ViewBag.Title = "JoinGame";
 }
 
-<h2>JoinGame</h2>
-<form name="SendName" action="/Home/GameLogin" method="post">
-    Name<br />
-    <input type="text" name="NameInput" />
-    GameKey<br />
-    <input type="text" name="GameKey" />
-    <input type="submit" value="Enter" />
-</form>
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+<div class="joinGamePhoto">
+
+
+    <form name="SendName" action="/Home/GameLogin" method="post">
+
+        <div class="yourName">
+            Your Name
+
+            <input type="text" name="NameInput" />
+
+        </div>
+
+        <div class="gameKey">
+            Game Key
+
+            <input type="text" name="GameKey" />
+            <input type="submit" value="Enter" />
+
+        </div>
+
+    </form>
+</div>

@@ -3,12 +3,25 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Create Game</h2>
-<a href="/Home/NewGame">
-    <input id="Button1" type="button" value="Create Game" />
-</a>
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
 
-<h2>Join Game</h2>
-<a href="/Home/JoinGame">
-    <input id="Button1" type="button" value="Join Game" />
-</a>
+<div class="indexPhoto">
+
+
+    @*<div class="createGame">
+            <h2>Create Game</h2>
+        </div>*@
+
+    <div class="createGameButton">
+        <a href="/Home/NewGame">
+            <input id="Button1" type="button" value="Create Game" />
+        </a>
+
+        <a href="/Home/JoinGame">
+            <input id="Button2" type="button" value=" Join Game " />
+        </a>
+    </div>
+
+</div>
+
+

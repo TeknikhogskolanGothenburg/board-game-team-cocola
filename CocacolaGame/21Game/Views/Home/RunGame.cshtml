@@ -2,9 +2,9 @@
 @{
     ViewBag.Title = "RunGame";
 }
-
+<meta http-equiv="refresh" content="5">
 <h2>RunGame</h2>
-<div style="width:100%; background-color:yellow" >
+<div style="width:100%;" >
     @{
 
         var i = 0;
@@ -25,7 +25,34 @@
 
         }
 
+      
 
 
-    }
+
+        <h2>Get Card</h2>
+        <a href="/Home/GetCard">
+            <input id="Button1" type="button" value="GetCard" />
+        </a>
+        if (Model._CurrentPlayer.PlayerStand == 0)
+        {
+            <a href="/Home/PlayerStand">
+                <input id="Button1" type="button" value="Stand" />
+            </a>
+        }
+        else
+        {
+            <h2>Stand</h2>
+           
+                <input id="Button1" type="button" style="background-color:red;" value="Stand" />
+           
+        }
+        if (Model._CurrentPlayer.IsAdmin == 1 && Model.GameRound == 1)
+        {
+        <h2>Restar Game</h2>
+        <a href="/Home/NewRound">
+            <input id="Button1" type="button" value="New Round" />
+        </a>
+        }
+        }
  </div>
+       

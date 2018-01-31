@@ -12,5 +12,6 @@ namespace GameEngine
         public int IsAdmin { get; set; }
         public int Points { get; set; }
         public int Attemp  { get; set; }
-}
+        public int PlayerStand { get; set; }
+    }
 }

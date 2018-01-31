@@ -3,9 +3,17 @@
     ViewBag.Title = "NewGame";
 }
 
-<h2>NewGame</h2>
-<form name="SendName" action="/Home/GameCreator" method="post">
-    Name<br />
-    <input type="text" name="NameInput" />
-    <input type="submit" value="Enter" />
-</form>
+<link href="~/Content/StyleSheet1.css" rel="stylesheet" />
+
+<div class="newGamePhoto">
+
+    <form name="SendName" action="/Home/GameCreator" method="post">
+        <div class="yourName">Your Name</div>
+
+        <div class="boxNewGame">
+            <input type="text" name="NameInput" />
+            <input type="submit" value="Enter" />
+        </div>
+
+    </form>
+</div>
